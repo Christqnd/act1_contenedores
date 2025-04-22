@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Productos</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f7fb; /* Color suave de fondo (gris claro) */
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333; /* Texto en gris oscuro */
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco suave con un toque de opacidad */
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 1000px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #5a5a5a; /* Gris más oscuro para el título */
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 10px;
+      width: 250px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border: 1px solid #e0e0e0; /* Borde suave y ligero */
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-name {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #6d6d6d; /* Gris suave para el nombre del producto */
+      margin-bottom: 0.5rem;
+    }
+
+    .product-price {
+      font-size: 1.2rem;
+      color: #4CAF50; /* Verde suave para el precio */
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Catálogo de Productos</h2>
+    <div class="product-list">
+      <div *ngFor="let product of products" class="product-card">
+        <div class="product-name">{{ product.name }}</div>
+        <div class="product-price">${{ product.price }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aquí agregas los scripts de Angular y otras dependencias -->
+  <script src="https://code.angularjs.org/1.7.9/angular.min.js"></script> <!-- Si usas AngularJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@angular/core@latest"></script> <!-- Si usas Angular moderno -->
+</body>
+</html>
