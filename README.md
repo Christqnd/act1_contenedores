@@ -1,94 +1,77 @@
-
 # Act1 Contenedores
 
-Este proyecto utiliza Docker para desplegar una aplicación que consta de tres contenedores: un contenedor para la base de datos PostgreSQL, un contenedor para el backend con Quarkus, y un contenedor para el frontend con Angular. Además, el proyecto incluye una red Docker para interconectar estos contenedores.
+Este proyecto despliega una aplicación compuesta por tres servicios principales utilizando Docker:
+
+- **Base de datos PostgreSQL**
+- **Backend desarrollado con Quarkus**
+- **Frontend construido con Angular**
+
+Los servicios están interconectados mediante una red Docker personalizada, facilitando la comunicación entre ellos.
 
 ## Tecnologías Utilizadas
 
-- **Docker**: Contenerización de servicios.
-- **PostgreSQL**: Base de datos relacional.
-- **Quarkus**: Framework para el backend.
-- **Angular**: Framework para el frontend.
+- [Docker](https://www.docker.com/): Contenerización de servicios.
+- [PostgreSQL](https://www.postgresql.org/): Base de datos relacional.
+- [Quarkus](https://quarkus.io/): Framework para el backend.
+- [Angular](https://angular.io/): Framework para el frontend.
 
 ## Requisitos Previos
 
-- **Docker**: Asegúrate de tener Docker instalado en tu máquina. Si no lo tienes, puedes seguir la guía oficial de instalación desde [aquí](https://docs.docker.com/get-docker/).
+- Tener instalado [Docker](https://docs.docker.com/get-docker/).
+- Opcionalmente, tener instalado [Docker Compose](https://docs.docker.com/compose/install/) si se desea utilizar `docker-compose`.
 
 ## Estructura del Proyecto
 
-- **backend**: Contenedor para el backend utilizando Quarkus.
-- **frontend**: Contenedor para el frontend utilizando Angular.
-- **postgres**: Contenedor para la base de datos PostgreSQL.
+El repositorio está organizado de la siguiente manera:
 
-## Instalación y Ejecución
+```
+├── backend/             # Código fuente del backend (Quarkus)
+├── frontend/            # Código fuente del frontend (Angular)
+├── database/            # Archivos relacionados con la base de datos PostgreSQL
+├── 1-start-services.sh  # Script para iniciar los servicios (versión simple)
+├── 2-start-services.sh  # Script para iniciar los servicios con opciones adicionales
+├── clean-all.sh         # Script para detener y eliminar los contenedores y redes
+├── README.md            # Documentación del proyecto
+└── ...
+```
 
-1. **Ejecutar el script de limpieza** (opcional):
+## Instrucciones de Uso
 
-   Si deseas limpiar los contenedores anteriores, ejecuta el siguiente comando para eliminar contenedores previos:
+### Clonar el Repositorio
 
-   ```bash
-   ./clean-all.sh
-   ```
+```bash
+git clone https://github.com/Christqnd/act1_contenedores.git
+cd act1_contenedores
+```
 
-2. **Construir y ejecutar PostgreSQL**:
+### Iniciar los Servicios
 
-   Crea y ejecuta el contenedor de PostgreSQL:
+Para iniciar los servicios, puedes utilizar uno de los scripts proporcionados:
 
-   ```bash
-   docker run --name my-postgres -e POSTGRES_DB=postgres -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -v pgdata:/var/lib/postgresql/data -p 5432:5432 -d postgres:latest
-   ```
+```bash
+./1-start-services.sh
+```
 
-   Luego, copia el archivo `init.sql` al contenedor y ejecuta las instrucciones de la base de datos:
+Este script construirá las imágenes necesarias y levantará los contenedores correspondientes.
 
-   ```bash
-   docker cp init.sql my-postgres:/init.sql
-   docker exec -it my-postgres psql -U myuser -d postgres -f /init.sql
-   ```
+### Acceder a la Aplicación
 
-3. **Construir y ejecutar el Backend**:
+- **Frontend (Angular)**: [http://localhost:4200](http://localhost:4200)
+- **Backend (Quarkus)**: [http://localhost:8080](http://localhost:8080)
+- **Base de Datos (PostgreSQL)**: Accesible en el puerto `5432`
 
-   Construye la imagen de Docker para el backend utilizando Quarkus:
+### Detener y Limpiar los Servicios
 
-   ```bash
-   docker build -t my-backend ./backend
-   ```
+Para detener y eliminar los contenedores, redes e imágenes creadas, ejecuta:
 
-   Luego, ejecuta el contenedor:
+```bash
+./clean-all.sh
+```
 
-   ```bash
-   docker run -d --name my-backend -p 8080:8080 -e QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://my-postgres:5432/postgres -e QUARKUS_DATASOURCE_USERNAME=myuser -e QUARKUS_DATASOURCE_PASSWORD=mypassword my-backend
-   ```
+## Contribuciones
 
-4. **Construir y ejecutar el Frontend**:
-
-   Construye la imagen de Docker para el frontend utilizando Angular:
-
-   ```bash
-   docker build -t my-frontend ./frontend
-   ```
-
-   Luego, ejecuta el contenedor:
-
-   ```bash
-   docker run -d --name my-frontend -p 4200:4200 my-frontend
-   ```
-
-5. **Crear y conectar redes**:
-
-   Crea una red Docker y conecta todos los contenedores a ella:
-
-   ```bash
-   docker network create my-red
-   docker network connect my-red my-frontend
-   docker network connect my-red my-backend
-   docker network connect my-red my-postgres
-   ```
-
-## Problemas Comunes
-
-- **Conexión entre contenedores**: Asegúrate de que los contenedores estén conectados a la misma red Docker.
-- **Permisos de base de datos**: Si encuentras errores al acceder a la base de datos, revisa las credenciales y asegúrate de que los servicios estén correctamente configurados.
+Las contribuciones son bienvenidas. Si deseas mejorar este proyecto, por favor realiza un fork del repositorio y envía un pull request con tus cambios.
 
 ## Licencia
 
-Este proyecto está bajo la Licencia MIT - consulta el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más información.
