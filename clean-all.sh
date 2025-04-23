@@ -17,10 +17,10 @@ docker stop my-database
 docker rm my-database
 docker rmi -f my-database
 
-echo "Eliminando contenedor christqnd2409/my-frontend..."
-docker stop christqnd2409/my-frontend
-docker rm christqnd2409/my-frontend
-docker rmi -f christqnd2409/my-frontend
+echo "Eliminando contenedor christqnd2409/my-database..."
+docker stop christqnd2409/my-database
+docker rm christqnd2409/my-database
+docker rmi -f christqnd2409/my-database
 
 docker volume rm pgdata
 
